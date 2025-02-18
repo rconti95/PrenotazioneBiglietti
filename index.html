@@ -15,7 +15,7 @@
         <h2>Prenota i tuoi biglietti</h2>
         <label for="classi">Seleziona la classe:</label>
         <select id="classi" onchange="loadStudents()">
-            <option value="">-- Seleziona la classe dell'alunno/a:--</option>
+            <option value="">Seleziona la classe dell'alunno/a:</option>
             <option value="classe1">Classe 1</option>
             <option value="classe2">Classe 2</option>
             <option value="classe3a">Classe 3A</option>
@@ -24,33 +24,40 @@
             <option value="classe5">Classe 5</option>
         </select>
 
-        <label for="studenti">Seleziona lo studente:</label>
+        <label for="studenti">Seleziona l'alunno/a:</label>
         <select id="studenti" disabled onchange="enableBooking()">
-            <option value="">-- Seleziona uno studente --</option>
+            <option value="">Seleziona l'alunno/a:</option>
         </select>
 
         <div id="bookingSection" style="display: none;">
-            <label for="interi">Biglietti interi (15€):</label>
+            <label for="interi">Numero biglietti interi (12-99 anni) - Costo 15€:</label>
             <input type="number" id="interi" min="0" max="6" value="0" onchange="calculateTotal()">
 
-            <label for="ridotti">Biglietti ridotti (10€):</label>
+            <label for="ridotti">Numero biglietti ridotti (3-11 anni) - Costo 8€</label>
+            <input type="number" id="ridotti" min="0" max="6" value="0" onchange="calculateTotal()">
+
+            <label for="ridotti">Numero biglietti gratuiti (0-2 anni) - Gratuito</label>
             <input type="number" id="ridotti" min="0" max="6" value="0" onchange="calculateTotal()">
 
             <h3>Totale: <span id="totale">0</span>€</h3>
-            <button onclick="acquista()">Acquista</button>
+            <button onclick="acquista()">Prenota</button>
         </div>
     </div>
 
     <script>
         const studentiPerClasse = {
             classe1: ["Mario Rossi", "Luca Bianchi"],
-            classe2: ["Giulia Verdi", "Anna Neri"]
+            classe2: ["Giulia Verdi", "Anna Neri"],
+            classe3a: ["Giulia Verdi", "Anna Neri"],
+            classe3b: ["Giulia Verdi", "Anna Neri"],
+            classe4: ["Giulia Verdi", "Anna Neri"],
+            classe5: ["Giulia Verdi", "Anna Neri"]
         };
 
         function loadStudents() {
             let classe = document.getElementById("classi").value;
             let studentiSelect = document.getElementById("studenti");
-            studentiSelect.innerHTML = '<option value="">-- Seleziona uno studente --</option>';
+            studentiSelect.innerHTML = '<option value="">Seleziona l'alunno/a:</option>';
 
             if (classe) {
                 studentiPerClasse[classe].forEach(studente => {
@@ -76,7 +83,7 @@
                 alert("Puoi acquistare al massimo 6 biglietti!");
                 return;
             }
-            let totale = (interi * 15) + (ridotti * 10);
+            let totale = (interi * 15) + (ridotti * 8);
             document.getElementById("totale").textContent = totale;
         }
 
