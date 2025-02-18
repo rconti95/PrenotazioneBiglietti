@@ -26,7 +26,7 @@
 
         <label for="studenti">Seleziona l'alunno/a:</label>
         <select id="studenti" disabled onchange="enableBooking()">
-            <option value="">Seleziona l'alunno/a:</option>
+            <option value="">--Seleziona l'alunno/a--</option>
         </select>
 
         <div id="bookingSection" style="display: none;">
@@ -57,7 +57,7 @@
         function loadStudents() {
             let classe = document.getElementById("classi").value;
             let studentiSelect = document.getElementById("studenti");
-            studentiSelect.innerHTML = '<option value="">Seleziona l'alunno/a:</option>';
+            studentiSelect.innerHTML = '<option value="">--Seleziona l'alunno/a--</option>';
 
             if (classe) {
                 studentiPerClasse[classe].forEach(studente => {
