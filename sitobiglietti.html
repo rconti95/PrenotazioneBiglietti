@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prenotazione Biglietti Teatro</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
+        .container { max-width: 400px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; }
+        select, input, button { margin: 10px 0; padding: 8px; width: 100%; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Prenota i tuoi biglietti</h2>
+        <label for="classi">Seleziona la classe:</label>
+        <select id="classi" onchange="loadStudents()">
+            <option value="">-- Seleziona una classe --</option>
+            <option value="classe1">Classe 1</option>
+            <option value="classe2">Classe 2</option>
+        </select>
+
+        <label for="studenti">Seleziona lo studente:</label>
+        <select id="studenti" disabled onchange="enableBooking()">
+            <option value="">-- Seleziona uno studente --</option>
+        </select>
+
+        <div id="bookingSection" style="display: none;">
+            <label for="interi">Biglietti interi (15€):</label>
+            <input type="number" id="interi" min="0" max="6" value="0" onchange="calculateTotal()">
+
+            <label for="ridotti">Biglietti ridotti (10€):</label>
+            <input type="number" id="ridotti" min="0" max="6" value="0" onchange="calculateTotal()">
+
+            <h3>Totale: <span id="totale">0</span>€</h3>
+            <button onclick="acquista()">Acquista</button>
+        </div>
+    </div>
+
+    <script>
+        const studentiPerClasse = {
+            classe1: ["Mario Rossi", "Luca Bianchi"],
+            classe2: ["Giulia Verdi", "Anna Neri"]
+        };
+
+        function loadStudents() {
+            let classe = document.getElementById("classi").value;
+            let studentiSelect = document.getElementById("studenti");
+            studentiSelect.innerHTML = '<option value="">-- Seleziona uno studente --</option>';
+
+            if (classe) {
+                studentiPerClasse[classe].forEach(studente => {
+                    let option = document.createElement("option");
+                    option.value = studente;
+                    option.textContent = studente;
+                    studentiSelect.appendChild(option);
+                });
+                studentiSelect.disabled = false;
+            } else {
+                studentiSelect.disabled = true;
+            }
+        }
+
+        function enableBooking() {
+            document.getElementById("bookingSection").style.display = "block";
+        }
+
+        function calculateTotal() {
+            let interi = parseInt(document.getElementById("interi").value) || 0;
+            let ridotti = parseInt(document.getElementById("ridotti").value) || 0;
+            if (interi + ridotti > 6) {
+                alert("Puoi acquistare al massimo 6 biglietti!");
+                return;
+            }
+            let totale = (interi * 15) + (ridotti * 10);
+            document.getElementById("totale").textContent = totale;
+        }
+
+        function acquista() {
+            alert("Acquisto completato! Grazie per la prenotazione.");
+        }
+    </script>
+</body>
+</html>
